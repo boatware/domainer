@@ -1,4 +1,4 @@
-package main
+package domainer
 
 import "testing"
 
