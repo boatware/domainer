@@ -200,7 +200,3 @@ func FromString(url string) (*URL, error) {
 
 	return u, nil
 }
-
-func main() {
-
-}
