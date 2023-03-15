@@ -6,47 +6,66 @@ import (
 	"strings"
 )
 
+// Query is a key-value pair used in a URL query string.
 type Query struct {
-	Key   string `json:"key"`
+	// Key is the key of the query.
+	// Example: "q" in "https://example.com/search?q=hello+world"
+	Key string `json:"key"`
+
+	// Value is the value of the query.
+	// Example: "hello+world" in "https://example.com/search?q=hello+world"
 	Value string `json:"value"`
 }
 
 // URL is a split of a given domain name.
 type URL struct {
 	// FullURL represents the full domain name this struct has been created with.
+	// Example: "https://www.example.com:443/search?q=hello+world#test"
 	FullURL string `json:"full_url"`
 
 	// Protocol represents the protocol used to access the domain.
+	// Example: "https" in "https://www.example.com:443/search?q=hello+world#test"
 	Protocol string `json:"protocol"`
 
 	// Subdomain represents the subdomain of the domain.
+	// Example: "www" in "https://www.example.com:443/search?q=hello+world#test"
 	Subdomain string `json:"subdomain"`
 
 	// Domain represents the domain name.
+	// Example: "example" in "https://www.example.com:443/search?q=hello+world#test"
 	Domain string `json:"domain"`
 
 	// TLD represents the top level domain.
+	// Example: "com" in "https://www.example.com:443/search?q=hello+world#test"
 	TLD string `json:"tld"`
 
 	// Port represents the port used to access the domain.
+	// Example: 443 in "https://www.example.com:443/search?q=hello+world#test"
 	Port int `json:"port"`
 
 	// Path represents the path used to access the domain.
+	// Example: "/search" in "https://www.example.com:443/search?q=hello+world#test"
 	Path string `json:"path"`
 
 	// Query represents the query used to access the domain.
+	// Example: []Query{{"q", "hello+world"}} in "https://www.example.com:443/search?q=hello+world#test"
 	Query []Query `json:"query"`
 
 	// Fragment represents the fragment used to access the domain.
+	// Example: "test" in "https://www.example.com:443/search?q=hello+world#test"
 	Fragment string `json:"fragment"`
 
 	// Username represents the username used to access the domain.
+	// Example: "user" in "https://user:pass@example.com:443/search?q=hello+world#test"
 	Username string `json:"username"`
 
 	// Password represents the password used to access the domain.
+	// Example: "pass" in "https://user:pass@example.com:443/search?q=hello+world#test"
 	Password string `json:"password"`
 }
 
+// FromString parses a given domain name and returns a URL struct.
+//
 //goland:noinspection HttpUrlsUsage
 func FromString(url string) (*URL, error) {
 	u := &URL{}

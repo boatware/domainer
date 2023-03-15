@@ -8,11 +8,11 @@ var tests = []struct {
 	expected URL
 }{
 	{
-		"Parse full domain with every part", "https://www.google.com:443/search?q=hello+world#test", URL{
-			FullURL:   "https://www.google.com:443/search?q=hello+world#test",
+		"Parse full domain with every part", "https://www.example.com:443/search?q=hello+world#test", URL{
+			FullURL:   "https://www.example.com:443/search?q=hello+world#test",
 			Protocol:  "https",
 			Subdomain: "www",
-			Domain:    "google",
+			Domain:    "example",
 			TLD:       "com",
 			Port:      443,
 			Path:      "/search",
@@ -26,11 +26,11 @@ var tests = []struct {
 		},
 	},
 	{
-		"Parse full URL with multipart TLD", "https://www.google.co.uk:443/search?q=hello+world#test", URL{
-			FullURL:   "https://www.google.co.uk:443/search?q=hello+world#test",
+		"Parse full URL with multipart TLD", "https://www.example.co.uk:443/search?q=hello+world#test", URL{
+			FullURL:   "https://www.example.co.uk:443/search?q=hello+world#test",
 			Protocol:  "https",
 			Subdomain: "www",
-			Domain:    "google",
+			Domain:    "example",
 			TLD:       "co.uk",
 			Port:      443,
 			Path:      "/search",
@@ -44,10 +44,10 @@ var tests = []struct {
 		},
 	},
 	{
-		"Parse full URL with no subdomain", "https://google.com:443/search?q=hello+world#test", URL{
-			FullURL:  "https://google.com:443/search?q=hello+world#test",
+		"Parse full URL with no subdomain", "https://example.com:443/search?q=hello+world#test", URL{
+			FullURL:  "https://example.com:443/search?q=hello+world#test",
 			Protocol: "https",
-			Domain:   "google",
+			Domain:   "example",
 			TLD:      "com",
 			Port:     443,
 			Path:     "/search",
@@ -61,41 +61,41 @@ var tests = []struct {
 		},
 	},
 	{
-		"Parse simple URL", "https://google.com", URL{
-			FullURL:  "https://google.com",
+		"Parse simple URL", "https://example.com", URL{
+			FullURL:  "https://example.com",
 			Protocol: "https",
-			Domain:   "google",
+			Domain:   "example",
 			TLD:      "com",
 		},
 	},
 	{
-		"Parse URL with no protocol given", "google.com", URL{
-			FullURL: "google.com",
-			Domain:  "google",
+		"Parse URL with no protocol given", "example.com", URL{
+			FullURL: "example.com",
+			Domain:  "example",
 			TLD:     "com",
 		},
 	},
 	{
-		"Parse URL with username and password", "user:pass@google.com", URL{
-			FullURL:  "user:pass@google.com",
-			Domain:   "google",
+		"Parse URL with username and password", "user:pass@example.com", URL{
+			FullURL:  "user:pass@example.com",
+			Domain:   "example",
 			TLD:      "com",
 			Username: "user",
 			Password: "pass",
 		},
 	},
 	{
-		"Parse URL with only username", "user@google.com", URL{
-			FullURL:  "user@google.com",
-			Domain:   "google",
+		"Parse URL with only username", "user@example.com", URL{
+			FullURL:  "user@example.com",
+			Domain:   "example",
 			TLD:      "com",
 			Username: "user",
 		},
 	},
 	{
-		"Parse URL with username and port", "user@google.com:80", URL{
-			FullURL:  "user@google.com:80",
-			Domain:   "google",
+		"Parse URL with username and port", "user@example.com:80", URL{
+			FullURL:  "user@example.com:80",
+			Domain:   "example",
 			TLD:      "com",
 			Username: "user",
 			Port:     80,

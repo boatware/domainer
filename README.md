@@ -1,5 +1,7 @@
 # domainer
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/boatware/domainer.svg)](https://pkg.go.dev/github.com/boatware/domainer)
+
 Simple Go library to split URLs into their domain parts.
 
 ## Installation
