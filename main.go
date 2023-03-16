@@ -2,6 +2,7 @@ package domainer
 
 import (
 	"golang.org/x/net/publicsuffix"
+	"net"
 	"strconv"
 	"strings"
 )
@@ -31,7 +32,11 @@ type URL struct {
 	// Example: "www" in "https://www.example.com:443/search?q=hello+world#test"
 	Subdomain string `json:"subdomain"`
 
-	// Domain represents the domain name.
+	// Hostname represents the hostname of the domain.
+	// Example: "example.com" in "https://www.example.com:443/search?q=hello+world#test"
+	Hostname string `json:"hostname"`
+
+	// Domain represents the domain name (or second level domain).
 	// Example: "example" in "https://www.example.com:443/search?q=hello+world#test"
 	Domain string `json:"domain"`
 
@@ -62,6 +67,10 @@ type URL struct {
 	// Password represents the password used to access the domain.
 	// Example: "pass" in "https://user:pass@example.com:443/search?q=hello+world#test"
 	Password string `json:"password"`
+
+	// IPAddress represents the IP address the domain resolves to.
+	// Example: "127.0.0.1" (obviously not a real server IP address)
+	IPAddress string `json:"ip_address"`
 }
 
 // FromString parses a given domain name and returns a URL struct.
@@ -197,6 +206,8 @@ func FromString(url string) (*URL, error) {
 		return nil, err
 	}
 
+	u.Hostname = tldPlusOne
+
 	// Split the tldPlusOne into url and tld
 	tldPlusOneParts := strings.Split(tldPlusOne, ".")
 	tld := strings.Join(tldPlusOneParts[1:], ".")
@@ -216,6 +227,13 @@ func FromString(url string) (*URL, error) {
 
 	// The rest of the url is the subdomain
 	u.Subdomain = strings.Join(domainParts[:len(domainParts)-1], ".")
+
+	// Get the IP address
+	ip, err := net.LookupIP(u.Hostname)
+	if err != nil {
+		return nil, err
+	}
+	u.IPAddress = ip[0].String()
 
 	return u, nil
 }
